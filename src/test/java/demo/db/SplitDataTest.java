@@ -19,5 +19,11 @@ public class SplitDataTest {
 		SplitData splitData = new SplitData();
 		assertEquals(3, splitData.process("1\t\t").length);
 	}
+	
+	@Test
+	public void withTripleTabShouldHaveSizeFour() {
+		SplitData splitData = new SplitData();
+		assertEquals(4, splitData.process("1\t\t\t").length);
+	}
 
 }

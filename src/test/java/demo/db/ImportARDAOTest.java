@@ -18,17 +18,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class PersonDAOTest {
+public class ImportARDAOTest {
 
 	private static final String JDBC_DRIVER = org.h2.Driver.class.getName();
-	private static final String JDBC_URL = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1";
+	private static final String JDBC_URL = "jdbc:h2:mem:test;MODE=Oracle;DB_CLOSE_DELAY=-1";
 	private static final String USER = "sa";
 	private static final String PASSWORD = "";
 	private static final String UTF8 = "UTF8";
 
 	@BeforeClass
 	public static void createSchema() throws Exception {
-		RunScript.execute(JDBC_URL, USER, PASSWORD, "schema.sql", Charset.forName(UTF8), false);
+		RunScript.execute(JDBC_URL, USER, PASSWORD, "schema_csp.sql", Charset.forName(UTF8), false);
 	}
 
 	@Before
@@ -38,7 +38,7 @@ public class PersonDAOTest {
 	}
 
 	private IDataSet readDataSet() throws Exception {
-		return new FlatXmlDataSetBuilder().build(new File("persion.xml"));
+		return new FlatXmlDataSetBuilder().build(new File("log_import.xml"));
 	}
 
 	private void cleanlyInsert(IDataSet dataSet) throws Exception {
@@ -50,12 +50,12 @@ public class PersonDAOTest {
 	}
 
 	@Test
-	public void findAndReadExistingPersonByUserID() {
-		PersonDAO personDAO = new PersonDAO(getDataSource());
-		Person person = personDAO.getPerson(1);
+	public void findAndReadExistingLogByID() {
+		LogDAO logDAO = new LogDAO(getDataSource());
+		Log log = logDAO.getLog(1);
 
-		assertEquals(1, person.getID());
-		assertEquals("Up1", person.getFirstName());
+		assertEquals(1, log.getId());
+		assertEquals("AR", log.getDataType());
 	}
 
 	private DataSource getDataSource() {
