@@ -25,9 +25,7 @@ public class PersonDAO {
 			ResultSet resultSet = prep.executeQuery();
 
 			if (resultSet.next()) {
-				person = new Person();
-				person.setID(resultSet.getInt("ID"));
-				person.setFirstName(resultSet.getString("FIRSTNAME"));
+				person = mappingPerson(resultSet);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -43,15 +41,19 @@ public class PersonDAO {
 			ResultSet resultSet = prep.executeQuery();
 
 			while (resultSet.next()) {
-				Person person = new Person();
-				person.setID(resultSet.getInt("ID"));
-				person.setFirstName(resultSet.getString("FIRSTNAME"));
-				allPerson.add(person);
+				allPerson.add(mappingPerson(resultSet));
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("Cat not get all person");
 		}
 		return allPerson;
+	}
+	
+	private Person mappingPerson(ResultSet resultSet) throws Exception{
+		Person person = new Person();
+		person.setID(resultSet.getInt("ID"));
+		person.setFirstName(resultSet.getString("FIRSTNAME"));
+		return person;
 	}
 
 }
