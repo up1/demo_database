@@ -20,7 +20,8 @@ public class PersonDAO {
 		Person person = null;
 		try {
 			Connection connection = this.dataSource.getConnection();
-			PreparedStatement prep = connection.prepareStatement("select * from person where id=?");
+			String sql = "select * from person where id=?";
+			PreparedStatement prep = connection.prepareStatement(sql);
 			prep.setInt(1, id);
 			ResultSet resultSet = prep.executeQuery();
 
@@ -37,7 +38,8 @@ public class PersonDAO {
 		List<Person> allPerson = new ArrayList<Person>();
 		try {
 			Connection connection = this.dataSource.getConnection();
-			PreparedStatement prep = connection.prepareStatement("select * from person");
+			String sql = "select * from person";
+			PreparedStatement prep = connection.prepareStatement(sql);
 			ResultSet resultSet = prep.executeQuery();
 
 			while (resultSet.next()) {
