@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -17,6 +18,10 @@ import org.h2.tools.RunScript;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import demo.test.matrix.Backlog;
+import demo.test.matrix.BacklogRunner;
 
 public class PersonDAOTest {
 
@@ -50,12 +55,22 @@ public class PersonDAOTest {
 	}
 
 	@Test
+	@Backlog(name="FT0003")
 	public void findAndReadExistingPersonByUserID() {
 		PersonDAO personDAO = new PersonDAO(getDataSource());
 		Person person = personDAO.getPerson(1);
 
 		assertEquals(1, person.getID());
 		assertEquals("Up1", person.getFirstName());
+	}
+	
+	@Test
+	@Backlog(name="FT0004")
+	public void getAllPerson() {
+		PersonDAO personDAO = new PersonDAO(getDataSource());
+		List<Person> allPerson = personDAO.getAll();
+
+		assertEquals(2, allPerson.size());
 	}
 
 	private DataSource getDataSource() {
