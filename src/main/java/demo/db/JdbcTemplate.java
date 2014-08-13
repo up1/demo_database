@@ -49,4 +49,14 @@ public class JdbcTemplate<T> {
 		}
 	}
 
+	public int queryForInt(String sql, Object[] params) throws SQLException {
+		this.preparedStatement = this.dataSource.getConnection().prepareStatement(sql);
+		setupParams(params);
+		ResultSet resultSet = this.preparedStatement.executeQuery();
+		if(resultSet.next()) {
+			return resultSet.getInt(1);
+		}
+		throw new SQLException("Data not found");
+	}
+
 }

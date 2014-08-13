@@ -1,9 +1,5 @@
 package demo.db;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -31,6 +27,16 @@ public class PersonDAO {
 			String sql = "select * from person";
 			JdbcTemplate<Person> jdbcTemplate = new JdbcTemplate<Person>(this.dataSource);
 			return jdbcTemplate.executeQuery(sql, null, new PersonRowMapper());
+		} catch (Exception e) {
+			throw new RuntimeException("Cat not get all person");
+		}
+	}
+
+	public int count() {
+		try {
+			String sql = "select count(*) from person";
+			JdbcTemplate<Person> jdbcTemplate = new JdbcTemplate<Person>(this.dataSource);
+			return jdbcTemplate.queryForInt(sql, null);
 		} catch (Exception e) {
 			throw new RuntimeException("Cat not get all person");
 		}

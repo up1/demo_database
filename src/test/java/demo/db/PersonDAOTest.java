@@ -72,6 +72,13 @@ public class PersonDAOTest {
 
 		assertEquals(2, allPerson.size());
 	}
+	
+	@Test
+	@Backlog(name="FT0004")
+	public void countPerson() {
+		PersonDAO personDAO = new PersonDAO(getDataSource());
+		assertEquals(2, personDAO.count());
+	}
 
 	private DataSource getDataSource() {
 		JdbcDataSource dataSource = new JdbcDataSource();
